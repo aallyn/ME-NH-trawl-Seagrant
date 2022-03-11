@@ -88,7 +88,7 @@ tows_dat<- tows_dat %>%
   mutate(., "Date" = as.Date(format(Date), "%Y-%m-%d"))
 
 # Creating absences 
-species_keep<- c("cod atlantic", "dogfish spiny", "skate winter", "skate little", "sculpin longhorn", "lobster american")
+species_keep<- c("lobster american", "cod atlantic", "flounder winter", "haddock", "hake atlantic red", "hake silver (whiting)", "hake white", "monkfish", "pollock", "cunner", "redfish acadian ocean perch", "wolffish atlantic", "cusk", "dogfish spiny", "skate winter", "skate little", "sculpin longhorn", "sea bass black", "alewife", "herring atlantic", "sand lance american", "capelin", "squid long finned", "butterfish", "mackerel atlantic")
 
 presence_data<- raw_catch_dat %>%
   mutate(., "UniqueID" = paste(Survey, Season, Year, Tow_Number, sep = "_")) %>%
@@ -317,6 +317,9 @@ tidy_mod_data<- tows_run %>%
 # Finally, rename "Region" column to "STRATA"
 tidy_mod_data<- tidy_mod_data %>%
   dplyr::rename(., "STRATA" = "Region")
+
+# Save it
+saveRDS(tidy_mod_data, here("Data/tidy_mod_data.rds"))
 ```
 
 ## Model fitting, single species
@@ -673,15 +676,58 @@ if(FALSE){
 }
 str(tidy_mod_data)
 
-# Filtering to species we want
+# Filtering to species we want?
 species_keep<- c("cod atlantic", "dogfish spiny", "skate winter", "skate little", "sculpin longhorn", "lobster american")
+species_keep<- unique(tidy_mod_data$COMMON_NAME)
 jsdm_dat<- tidy_mod_data %>%
   filter(., COMMON_NAME %in% species_keep) %>%
   mutate(., COMMON_NAME_Fac = factor(COMMON_NAME, levels = species_keep))
 
-# Setting up VAST model
+# Setting up VAST model -- some of this is redundant if the single species model has been run already
+# Some helpful spatial files
+menh_shp<- st_read(paste0(shapefile_root, "Shapefiles/MaineDMR_Inshore_Trawl_Survey_Grid/MaineDMR_Inshore_Trawl_Survey_Grid.shp"))
+menh_chull<- menh_shp %>%
+  st_union() %>%
+  st_convex_hull()
+menh_chull<- st_as_sf(data.frame(Region = "MENH"), geometry=st_geometry(menh_chull))
+
+land<- st_read(paste0(shapefile_root, "Shapefiles/US_County_Boundaries/US_County_Boundaries.shp")) %>%
+  st_simplify(., dTolerance = 0.005)
+
+# Setting up strata limits -- focusing on an eastern vs. western GoM boundary divide...with regions 1 and 2 = west of penobscot bay, region 3 as Penobscot Bay, and regions 4 and 5 and east of penobscot bay
+menh_regions<- menh_shp %>%
+  group_by(region_id) %>%
+  summarize()
+
+for(i in seq_along(menh_regions$region_id)){
+  region_temp<- st_as_sf(data.frame(Region = menh_regions$region_id[i]), geometry = st_geometry(menh_regions[i,])) %>%
+    group_by(Region) %>%
+    summarize()
+  if(i == 1){
+    menh_regions_out<- region_temp
+  } else {
+    menh_regions_out<- bind_rows(menh_regions_out, region_temp)
+  }
+}
+
+# Finally add an all region
+menh_all<- menh_shp %>%
+  st_combine() 
+menh_all<- st_as_sf(data.frame(Region = 6), geometry = st_geometry(menh_all)) 
+menh_regions_out<- bind_rows(menh_regions_out, menh_all)
+
+# Renaming regions...
+menh_regions_out$Region<- c("West_of_Penobscot_Bay", "West_of_Penobscot_Bay", "Penobscot_Bay", "East_of_Penobscot_Bay", "East_of_Penobscot_Bay", "All")
+
+# Explicitly defining the strata
+strata_use<- data.frame("STRATA" = c("West_of_Penobscot_Bay", "Penobscot_Bay", "East_of_Penobscot_Bay", "All"))
+
+# Making the extrapolation grid and visualizing the sub regions
+vast_extrap_grid<- vast_make_extrap_grid(region_shapefile = menh_chull, index_shapes = menh_regions_out, strata.limits = strata_use, cell_size = 5000) %>%
+  drop_na(., STRATA)
+
 # First, the field and rho configuration settings. Field config sets up the spatial/spatio-temporal components and how many factors should be estimated. Rho config sets up autoregressive structure on intercepts and spatio-temporal components.
-field_config<- c("Omega1" = 2, "Epsilon1" = 2, "Omega2" = 2, "Epsilon2" = 2)
+field_config<- c("Omega1" = 4, "Epsilon1" = 4, "Omega2" = 4, "Epsilon2" = 4)
 rho_config<- c("Beta1" = 3, "Beta2" = 3, "Epsilon1" = 0, "Epsilon2" = 0)
     
 # Now, call the settings function 
