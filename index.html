@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Home</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Seagrant: ME-NH inshore trawl survey</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="biodiversity.html">Biodiversity Metrics</a>
+</li>
+<li>
+  <a href="gamms.html">GAMMs</a>
+</li>
+<li>
+  <a href="Trawl_plots.html">Functional Groups</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    NMDS
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="NMDS_species_biomass_7.21.html">Top 50 species biomass</a>
+    </li>
+    <li>
+      <a href="NMDS_species_abundance_7.21.html">Top 50 species abundance</a>
+    </li>
+    <li>
+      <a href="NMDS_group_biomass_7.21.html">Functional group biomass</a>
+    </li>
+    <li>
+      <a href="NMDS_group_abundance_7.21.html">Functional group abundance</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="anosim_adonis_analysis_7.21.html">Anosim/ Adonis</a>
+</li>
+<li>
+  <a href="env_NMDS.html">Environmental Effects on NMDS</a>
+</li>
+<li>
+  <a href="fishery_landings.html">Fishery Landings</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+
+</div>
+
+
+<style type="text/css">/********** GMRI Rmarkdown Core Style Sheet - Do Not Modify!!! **********/
+
+
+/********** Begin Style Sheet **********/
+
+/* Avenir Font from Fonts.com for GMRI Branding */
+
+@import url("http://fast.fonts.net/t/1.css?apiType=css&projectid=806f61f6-d695-4965-a878-820b50bc0269");
+    @font-face{
+        font-family:"Avenir LT W01_35 Light1475496";
+        src:url("Fonts/0078f486-8e52-42c0-ad81-3c8d3d43f48e.woff2") format("woff2"),url("Fonts/908c4810-64db-4b46-bb8e-823eb41f68c0.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_35 Light_1475502";
+        src:url("Fonts/a59168c1-917d-4de9-a244-0316c057c357.woff2") format("woff2"),url("Fonts/6dc0e7d8-9284-44e1-8f05-984a41daa3a4.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_45 Book1475508";
+        src:url("Fonts/065a6b14-b2cc-446e-9428-271c570df0d9.woff2") format("woff2"),url("Fonts/65d75eb0-2601-4da5-a9a4-9ee67a470a59.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_45 Book O1475514";
+        src:url("Fonts/476612d9-282d-4f76-95cd-b4dd31e7ed21.woff2") format("woff2"),url("Fonts/f1ebae2b-5296-4244-8771-5f40e60a564a.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_55 Roman1475520";
+        src:url("Fonts/b290e775-e0f9-4980-914b-a4c32a5e3e36.woff2") format("woff2"),url("Fonts/4b978f72-bb48-46c3-909a-2a8cd2f8819c.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_55 Obliqu1475526";
+        src:url("Fonts/1a7173fa-062b-49ad-9915-bc57d3bfc1f5.woff2") format("woff2"),url("Fonts/cdda031e-26e9-4269-83d1-5a218caa10db.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_65 Medium1475532";
+        src:url("Fonts/17b90ef5-b63f-457b-a981-503bb7afe3c0.woff2") format("woff2"),url("Fonts/c9aeeabd-dd65-491d-b4be-3e0db9ae47a0.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_65 Medium1475538";
+        src:url("Fonts/deb5e718-7abb-4df3-9365-edfa95317090.woff2") format("woff2"),url("Fonts/04801919-17ee-4c6b-8b17-eb1965cb3ed6.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_85 Heavy1475544";
+        src:url("Fonts/d513e15e-8f35-4129-ad05-481815e52625.woff2") format("woff2"),url("Fonts/61bd362e-7162-46bd-b67e-28f366c4afbe.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_85 Heavy_1475550";
+        src:url("Fonts/3c210c80-960f-4684-850b-25390b4d08af.woff2") format("woff2"),url("Fonts/cb5c71ad-e582-4d00-929c-67fbfaeb1c27.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_95 Black1475556";
+        src:url("Fonts/c78eb7af-a1c8-4892-974b-52379646fef4.woff2") format("woff2"),url("Fonts/75b36c58-2a02-4057-a537-09af0832ae46.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_95 Black_1475562";
+        src:url("Fonts/a2477e08-09d9-4d4b-97a9-23a1e22cb44c.woff2") format("woff2"),url("Fonts/19d12bba-92b1-43ad-9bab-cd36a4195c2a.woff") format("woff");
+    }
+
+
+
+
+
+/* PRE-Avenir Fonts: Lato + Raleway font import from google fonts */
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+/* add font families as needed: font-family: 'Lato', sans-serif; */
+
+
+/* Level 1 Headers */
+h1 { text-align: left;
+     margin: 10px 0 15px 0; 
+     font-size: 38px; 
+     font-family: Avenir;
+} 
+
+
+/* Headers 2 - 6 */
+h2, h3, h4, h5, h6 { 
+    color: #333333; 
+    margin: 20px 0 5px 0; 
+    text-align: left;
+    font-family: Avenir;}
+
+
+/* Sizing/font For Each Header Type */
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+h5 { font-size: 16px; font-weight: normal; color: #3069aa; text-decoration: underline;}
+h6 { font-size: 14px; font-weight: normal; color: #3069aa; }
+
+
+/* Paragraph Text */
+p, ol { margin-top: 10px; 
+    font-family: 'Raleway', sans-serif;}
+
+
+/* Title Author and Date Headers */
+h1.title.toc-ignore {margin-top: 10px;}
+h4.author, h4.date {
+    color: rgb(0,115,109);
+    margin-top: 0px; 
+    margin-bottom: 5px; 
+    font-size: 12px;}
+
+
+
+/* Add Spacing Above Headers */
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 40px;
+}
+
+
+/* Links */
+a {
+    color: rgb(234,79,18)
+}
+
+
+/***********************************************/
+
+
+/********  Table of Contents  **********/
+
+/* Highlighted TOC Element */
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: rgb(0,96,138);
+    border-color: rgb(0,96,138);
+}
+
+/* Default TOC Elements */
+.list-group-item, .list-group-item:focus, .list-group-item:hover {
+    z-index: 2;
+    color: rgb(0,96,138);
+    background-color: #fff;
+    border-color: rgb(0,96,138);
+}
+
+
+/********  Tab Panels  **********/
+
+/* Navigation Tabs - Highlighted Tabset Pills */
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #fff;
+    background-color: rgb(0,115,109) ;
+    }
+
+/* Navigation Tabs - Default Tabset Pills */
+.nav-pills > li > a, .nav-pills > li > a:hover, .nav-pills > li > a:focus {
+    color: rgb(0,115,109);
+    background-color: #fff;
+    }
+
+
+/* Second Level Tabs - Active */
+.nav.nav-tabs > li.active  > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fff;
+    background-color: rgb(83,83,83) ;
+    }
+
+/* Second Level Tabs - Inactive */
+.nav.nav-tabs > li  > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    color: rgb(83,83,83);
+    background-color: #fff;
+    }
+
+
+
+/********** End Core Style Sheet **********/
+/********** End Core Style Sheet **********/
+
+
+
+</style>
+<div id="understanding-climate-impacts-on-the-maine-coastal-fish-and-invertebrate-community-through-synthesis-of-the-maine-new-hampshire-inshore-trawl-survey" class="section level2">
+<h2>Understanding climate impacts on the Maine coastal fish and invertebrate community through synthesis of the Maine-New Hampshire Inshore Trawl Survey</h2>
+<p><br></p>
+<p>Lisa Kerr <sup>1 </sup>, Kathy Mills <sup>1</sup>, Riley Young Morse <sup>1</sup> , Rebecca Peters <sup>2</sup> , Andrew Allyn <sup>1</sup>, Jerelle Jesse <sup>1</sup>, Ashley Weston <sup>1</sup> <br></p>
+<p><sup>1</sup> Gulf of Maine Research Institute<br> 350 Commercial Street<br> Portland, ME 04101 <br></p>
+<p><sup>2</sup> Maine Department of Marine Resources<br> 194 McKown Point Road<br> West Boothbay Harbor, ME 04575 <br></p>
+<p><strong>Funding provided by Maine Sea Grant</strong> <br> <br></p>
+<div id="project-description" class="section level3">
+<h3>Project Description</h3>
+<blockquote>
+<p>The overarching goal of this research is to synthesize data collected through the Maine-New Hampshire Inshore Trawl Survey to understand how climate change, fishing, and other environmental drivers are impacting key fish and invertebrate communities in coastal Maine waters.</p>
+</blockquote>
+<div id="the-me-nh-inshore-trawl-survey-samples-in-5-regions-and-4-depth-strata-from-the-ma-nh-border-to-the-me-canada." class="section level4">
+<h4>The ME-NH inshore trawl survey samples in 5 Regions and 4 depth strata from the MA-NH border to the ME-Canada.</h4>
+<p><img src="ME_survey.png" alt="Survey Design" /><br></p>
+</div>
+<div id="the-me-nh-survey-can-be-compared-to-the-mdmf-and-nefsc-surveys-which-provide-larger-spatial-coverage-and-a-longer-time-series." class="section level4">
+<h4>The ME-NH survey can be compared to the MDMF and NEFSC surveys which provide larger spatial coverage and a longer time series.</h4>
+<p><img src="surveys_spatial.jpg" alt="Survey Spatial Coverage" /> <img src="surveys_temporal.png" alt="Survey Duration" /></p>
+</div>
+</div>
+<div id="analysis" class="section level3">
+<h3>Analysis</h3>
+<div id="objective-1-analyze-changes-in-biodiversity-in-space-and-time-and-evaluate-associations-with-environmental-factors-and-fishing" class="section level4">
+<h4>Objective 1: Analyze changes in biodiversity in space and time and evaluate associations with environmental factors and fishing<br></h4>
+</div>
+<div id="biodiversity-metrics" class="section level4">
+<h4><strong>Biodiversity metrics</strong> <br></h4>
+<p><img src="indices.png" alt="indices" /><img src="selected_indices.png" alt="indices" /></p>
+<p><br></p>
+</div>
+<div id="gamms" class="section level4">
+<h4><strong>GAMMs</strong> <br></h4>
+<p><img src="ME_gamms.png" style="width:90.0%" alt="ME-NH table" /><img src="GOM_gamms.png" style="width:90.0%" alt="GOM table" /></p>
+<p><br> <img src="gamm_richness.png" style="width:75.0%" alt="GAMM curves" /> <img src="gamm_shannon.png" style="width:75.0%" alt="GAMM curves" /> <img src="gamm_evenness.png" style="width:75.0%" alt="GAMM curves" /> <img src="gamm_tax.png" style="width:75.0%" alt="GAMM curves" /> <br> <br></p>
+</div>
+<div id="objective-2-identify-species-groups-and-assess-changes-in-habitat-suitability-if-functional-groups-and-communities-in-space-and-time" class="section level4">
+<h4>Objective 2: Identify species groups and assess changes in habitat suitability if functional groups and communities in space and time<br></h4>
+</div>
+<div id="nmds" class="section level4">
+<h4><strong>NMDS</strong></h4>
+<p>Functional Groups <img src="NMDS_groups.png" style="width:90.0%" alt="NMDS" /> <br> <br> Top species<br> <img src="NMDS_species.png" style="width:90.0%" alt="NMDS" /> <br> <br></p>
+</div>
+<div id="analysis-of-variance" class="section level4">
+<h4><strong>Analysis of variance</strong></h4>
+<p><img src="adonis_regions.png" style="width:55.0%" alt="adonis" /> <br> <br></p>
+<p><img src="adonis_years.png" style="width:90.0%" alt="adonis" /> <br> <br></p>
+</div>
+<div id="environmental-relationships-linear-and-non-linear-approaches" class="section level4">
+<h4><strong>Environmental relationships</strong> (linear and non-linear approaches)</h4>
+<p><img src="envfit.png" style="width:90.0%" alt="envfit" /> <br> <br></p>
+<p><img src="ordisurf.png" style="width:90.0%" /> <br> <br></p>
+</div>
+<div id="objective-3-analyze-joint-distribution-of-key-predator-prey-species-within-the-community-with-a-particular-focus-on-lobster-and-cod" class="section level4">
+<h4>Objective 3: Analyze joint distribution of key predator-prey species within the community, with a particular focus on lobster and cod</h4>
+<p><br></p>
+</div>
+<div id="objective-4-evaluate-how-ecosystem-changes-align-with-shifts-in-diversity-and-composition-of-fishery-landings-over-time-in-ports-along-maines-coastline" class="section level4">
+<h4>Objective 4: Evaluate how ecosystem changes align with shifts in diversity and composition of fishery landings over time in ports along Maine’s coastline</h4>
+</div>
+<div id="biodiversity-metrics-1" class="section level4">
+<h4><strong>Biodiversity metrics</strong> <br></h4>
+<p><img src="landings_trawl.png" style="width:90.0%" /></p>
+</div>
+<div id="functional-groups" class="section level4">
+<h4><strong>Functional groups</strong> <br></h4>
+<p><img src="landings_groups.png" style="width:90.0%" /> <br></p>
+</div>
+<div id="correlation-analysis" class="section level4">
+<h4><strong>Correlation analysis</strong> <br></h4>
+<p><img src="correlation_matrix.png" style="width:55.0%" /> <br></p>
+<p><img src="correlation_table.png" style="width:50.0%" /><br />
+<br></p>
+</div>
+</div>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<ul>
+<li>Communities are changing over time in Maine waters</li>
+<li>Environmental factors are playing a key role in those changes
+<ul>
+<li>Temperature is the largest contributing factor</li>
+</ul></li>
+<li>Maine inshore waters match up well with offshore signal for biodiversity indices and environmental effects</li>
+<li>Maine landings are missing a large part of community structure with the piscivores functional group</li>
+<li>There is a benefit to using shorter time series surveys when put in context of a longer timeline and larger spatial coverage<br> <br></li>
+<li>see tabs for more indepth analysis and figures<br></li>
+</ul>
+<div id="contact" class="section level4">
+<h4>Contact: <br></h4>
+<p>Jerelle Jesse (<a href="mailto:jjesse@gmri.org">jjesse@gmri.org</a>) <br> Andrew Allyn (<a href="mailto:aallyn@gmri.org">aallyn@gmri.org</a>)</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

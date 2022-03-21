@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jerelle Jesse" />
+
+
+<title>Seagrant ME-NH trawl survey <br> Objectve 2: Nonmetric Multidimensional Scaling</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Seagrant: ME-NH inshore trawl survey</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="biodiversity.html">Biodiversity Metrics</a>
+</li>
+<li>
+  <a href="gamms.html">GAMMs</a>
+</li>
+<li>
+  <a href="Trawl_plots.html">Functional Groups</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    NMDS
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="NMDS_species_biomass_7.21.html">Top 50 species biomass</a>
+    </li>
+    <li>
+      <a href="NMDS_species_abundance_7.21.html">Top 50 species abundance</a>
+    </li>
+    <li>
+      <a href="NMDS_group_biomass_7.21.html">Functional group biomass</a>
+    </li>
+    <li>
+      <a href="NMDS_group_abundance_7.21.html">Functional group abundance</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="anosim_adonis_analysis_7.21.html">Anosim/ Adonis</a>
+</li>
+<li>
+  <a href="env_NMDS.html">Environmental Effects on NMDS</a>
+</li>
+<li>
+  <a href="fishery_landings.html">Fishery Landings</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+
+<style type="text/css">/********** GMRI Rmarkdown Core Style Sheet - Do Not Modify!!! **********/
+
+
+/********** Begin Style Sheet **********/
+
+/* Avenir Font from Fonts.com for GMRI Branding */
+
+@import url("http://fast.fonts.net/t/1.css?apiType=css&projectid=806f61f6-d695-4965-a878-820b50bc0269");
+    @font-face{
+        font-family:"Avenir LT W01_35 Light1475496";
+        src:url("Fonts/0078f486-8e52-42c0-ad81-3c8d3d43f48e.woff2") format("woff2"),url("Fonts/908c4810-64db-4b46-bb8e-823eb41f68c0.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_35 Light_1475502";
+        src:url("Fonts/a59168c1-917d-4de9-a244-0316c057c357.woff2") format("woff2"),url("Fonts/6dc0e7d8-9284-44e1-8f05-984a41daa3a4.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_45 Book1475508";
+        src:url("Fonts/065a6b14-b2cc-446e-9428-271c570df0d9.woff2") format("woff2"),url("Fonts/65d75eb0-2601-4da5-a9a4-9ee67a470a59.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_45 Book O1475514";
+        src:url("Fonts/476612d9-282d-4f76-95cd-b4dd31e7ed21.woff2") format("woff2"),url("Fonts/f1ebae2b-5296-4244-8771-5f40e60a564a.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_55 Roman1475520";
+        src:url("Fonts/b290e775-e0f9-4980-914b-a4c32a5e3e36.woff2") format("woff2"),url("Fonts/4b978f72-bb48-46c3-909a-2a8cd2f8819c.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_55 Obliqu1475526";
+        src:url("Fonts/1a7173fa-062b-49ad-9915-bc57d3bfc1f5.woff2") format("woff2"),url("Fonts/cdda031e-26e9-4269-83d1-5a218caa10db.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_65 Medium1475532";
+        src:url("Fonts/17b90ef5-b63f-457b-a981-503bb7afe3c0.woff2") format("woff2"),url("Fonts/c9aeeabd-dd65-491d-b4be-3e0db9ae47a0.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_65 Medium1475538";
+        src:url("Fonts/deb5e718-7abb-4df3-9365-edfa95317090.woff2") format("woff2"),url("Fonts/04801919-17ee-4c6b-8b17-eb1965cb3ed6.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_85 Heavy1475544";
+        src:url("Fonts/d513e15e-8f35-4129-ad05-481815e52625.woff2") format("woff2"),url("Fonts/61bd362e-7162-46bd-b67e-28f366c4afbe.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_85 Heavy_1475550";
+        src:url("Fonts/3c210c80-960f-4684-850b-25390b4d08af.woff2") format("woff2"),url("Fonts/cb5c71ad-e582-4d00-929c-67fbfaeb1c27.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_95 Black1475556";
+        src:url("Fonts/c78eb7af-a1c8-4892-974b-52379646fef4.woff2") format("woff2"),url("Fonts/75b36c58-2a02-4057-a537-09af0832ae46.woff") format("woff");
+    }
+    @font-face{
+        font-family:"Avenir LT W01_95 Black_1475562";
+        src:url("Fonts/a2477e08-09d9-4d4b-97a9-23a1e22cb44c.woff2") format("woff2"),url("Fonts/19d12bba-92b1-43ad-9bab-cd36a4195c2a.woff") format("woff");
+    }
+
+
+
+
+
+/* PRE-Avenir Fonts: Lato + Raleway font import from google fonts */
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+/* add font families as needed: font-family: 'Lato', sans-serif; */
+
+
+/* Level 1 Headers */
+h1 { text-align: left;
+     margin: 10px 0 15px 0; 
+     font-size: 38px; 
+     font-family: Avenir;
+} 
+
+
+/* Headers 2 - 6 */
+h2, h3, h4, h5, h6 { 
+    color: #333333; 
+    margin: 20px 0 5px 0; 
+    text-align: left;
+    font-family: Avenir;}
+
+
+/* Sizing/font For Each Header Type */
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+h5 { font-size: 16px; font-weight: normal; color: #3069aa; text-decoration: underline;}
+h6 { font-size: 14px; font-weight: normal; color: #3069aa; }
+
+
+/* Paragraph Text */
+p, ol { margin-top: 10px; 
+    font-family: 'Raleway', sans-serif;}
+
+
+/* Title Author and Date Headers */
+h1.title.toc-ignore {margin-top: 10px;}
+h4.author, h4.date {
+    color: rgb(0,115,109);
+    margin-top: 0px; 
+    margin-bottom: 5px; 
+    font-size: 12px;}
+
+
+
+/* Add Spacing Above Headers */
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 40px;
+}
+
+
+/* Links */
+a {
+    color: rgb(234,79,18)
+}
+
+
+/***********************************************/
+
+
+/********  Table of Contents  **********/
+
+/* Highlighted TOC Element */
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: rgb(0,96,138);
+    border-color: rgb(0,96,138);
+}
+
+/* Default TOC Elements */
+.list-group-item, .list-group-item:focus, .list-group-item:hover {
+    z-index: 2;
+    color: rgb(0,96,138);
+    background-color: #fff;
+    border-color: rgb(0,96,138);
+}
+
+
+/********  Tab Panels  **********/
+
+/* Navigation Tabs - Highlighted Tabset Pills */
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    color: #fff;
+    background-color: rgb(0,115,109) ;
+    }
+
+/* Navigation Tabs - Default Tabset Pills */
+.nav-pills > li > a, .nav-pills > li > a:hover, .nav-pills > li > a:focus {
+    color: rgb(0,115,109);
+    background-color: #fff;
+    }
+
+
+/* Second Level Tabs - Active */
+.nav.nav-tabs > li.active  > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fff;
+    background-color: rgb(83,83,83) ;
+    }
+
+/* Second Level Tabs - Inactive */
+.nav.nav-tabs > li  > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    color: rgb(83,83,83);
+    background-color: #fff;
+    }
+
+
+
+/********** End Core Style Sheet **********/
+/********** End Core Style Sheet **********/
+
+
+
+</style>
+<div id="nonmetric-multidimensional-scaling--top-50-abundance-species" class="section level1">
+<h1>Nonmetric Multidimensional Scaling- Top 50 abundance species</h1>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<ul>
+<li>Top 50 abundant species</li>
+<li>average across depth strata using the <a href="https://noaa-edab.github.io/tech-doc/inshoresurvdat.html#data-analysis-29">NOAA IEA technical document</a></li>
+</ul>
+<pre class="r"><code>#load packages
+library(tidyverse)
+library(vegan)
+library(ggrepel)
+library(ggforce)
+library(ggnewscale)
+library(ggthemes)
+library(here)
+library(plotly)
+library(rmarkdown)
+
+#set up ggplot theme
+theme_set(theme(axis.text.y = element_text(colour = &quot;black&quot;, size = 12, face = &quot;bold&quot;),
+        axis.text.x = element_text(colour = &quot;black&quot;, face = &quot;bold&quot;, size = 12),
+        legend.text = element_text(size = 12, face =&quot;bold&quot;, colour =&quot;black&quot;),
+        legend.position = &quot;right&quot;, 
+        axis.title.y = element_text(face = &quot;bold&quot;, size = 14, angle=90),
+        axis.title.x = element_text(face = &quot;bold&quot;, size = 12, colour = &quot;black&quot;),
+        legend.title = element_blank(),
+        panel.background = element_blank(), panel.border = element_rect(colour = &quot;black&quot;, fill = NA, size = 0.5),
+        legend.key=element_blank()))
+
+#load in data
+trawl_data_arrange&lt;-read.csv(here(&quot;Data/species_abundance_matrix.csv&quot;))[-1]
+paged_table(head(trawl_data_arrange))</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Season"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Region"],"name":[2],"type":["int"],"align":["right"]},{"label":["Year"],"name":[3],"type":["int"],"align":["right"]},{"label":["alewife"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["bass.striped"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["butterfish"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["clam.ocean.quahog"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["cod.atlantic"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["crab.atlantic.rock"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["crab.green"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["crab.jonah"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["crab.northern.stone"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["crab.red"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["cucumber.sea"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["cunner"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["cusk"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["dogfish.spiny"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["flounder.atlantic.witch..gray.sole."],"name":[18],"type":["dbl"],"align":["right"]},{"label":["flounder.winter"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["flounder.yellowtail"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["haddock"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["hake.atlantic.red"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["hake.silver..whiting."],"name":[23],"type":["dbl"],"align":["right"]},{"label":["hake.white"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["halibut.atlantic"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["herring.atlantic"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["herring.blueback"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["lobster.american"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["lumpfish"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["mackerel.atlantic"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["menhaden.atlantic"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["monkfish"],"name":[32],"type":["dbl"],"align":["right"]},{"label":["plaice.american..dab."],"name":[33],"type":["dbl"],"align":["right"]},{"label":["pollock"],"name":[34],"type":["dbl"],"align":["right"]},{"label":["pout.ocean"],"name":[35],"type":["dbl"],"align":["right"]},{"label":["redfish.acadian.ocean.perch"],"name":[36],"type":["dbl"],"align":["right"]},{"label":["scallop.sea"],"name":[37],"type":["dbl"],"align":["right"]},{"label":["sculpin.longhorn"],"name":[38],"type":["dbl"],"align":["right"]},{"label":["scup"],"name":[39],"type":["dbl"],"align":["right"]},{"label":["sea.raven"],"name":[40],"type":["dbl"],"align":["right"]},{"label":["shad.american"],"name":[41],"type":["dbl"],"align":["right"]},{"label":["skate.barndoor"],"name":[42],"type":["dbl"],"align":["right"]},{"label":["skate.clearnose"],"name":[43],"type":["dbl"],"align":["right"]},{"label":["skate.little"],"name":[44],"type":["dbl"],"align":["right"]},{"label":["skate.smooth"],"name":[45],"type":["dbl"],"align":["right"]},{"label":["skate.thorny"],"name":[46],"type":["dbl"],"align":["right"]},{"label":["skate.winter"],"name":[47],"type":["dbl"],"align":["right"]},{"label":["smelt.rainbow"],"name":[48],"type":["dbl"],"align":["right"]},{"label":["squid.long.finned"],"name":[49],"type":["dbl"],"align":["right"]},{"label":["squid.short.finned"],"name":[50],"type":["dbl"],"align":["right"]},{"label":["sturgeon.atlantic"],"name":[51],"type":["dbl"],"align":["right"]},{"label":["torpedo.atlantic"],"name":[52],"type":["dbl"],"align":["right"]},{"label":["wolffish.atlantic"],"name":[53],"type":["dbl"],"align":["right"]},{"label":["YEAR_GROUPS"],"name":[54],"type":["chr"],"align":["left"]},{"label":["YEAR_DECADES"],"name":[55],"type":["chr"],"align":["left"]},{"label":["REGION_NEW"],"name":[56],"type":["chr"],"align":["left"]},{"label":["REGION_YEAR"],"name":[57],"type":["chr"],"align":["left"]},{"label":["SEASON_YEAR"],"name":[58],"type":["chr"],"align":["left"]}],"data":[{"1":"Fall","2":"1","3":"2000","4":"84.03284","5":"0","6":"2.768519","7":"0","8":"1.675926","9":"1.500000","10":"0","11":"1.000000","12":"0","13":"0","14":"0","15":"8.000000","16":"0","17":"23.82941","18":"9.518083","19":"26.482446","20":"22.617647","21":"57.647059","22":"62.33803","23":"437.17432","24":"12.147712","25":"0.000000","26":"280.5847","27":"0.000000","28":"74.15093","29":"0","30":"27.357143","31":"5","32":"10.668705","33":"92.99586","34":"1.431373","35":"1.176471","36":"3.407407","37":"51.845679","38":"22.193355","39":"14.5","40":"1.734568","41":"1.809524","42":"0","43":"0","44":"4.151541","45":"0.000000","46":"1.500000","47":"2.568627","48":"32.0000","49":"28.93464","50":"22.50000","51":"0","52":"0","53":"0","54":"2000-2004","55":"2000-2009","56":"West of Penobscot Bay","57":"West of Penobscot Bay, 2000-2004","58":"Fall, 2000-2004","_rn_":"1"},{"1":"Fall","2":"1","3":"2001","4":"77.68783","5":"0","6":"54.044974","7":"0","8":"1.612875","9":"20.500000","10":"0","11":"23.372134","12":"0","13":"0","14":"0","15":"1.166667","16":"0","17":"51.41667","18":"51.364198","19":"57.514550","20":"14.105820","21":"5.315697","22":"80.60935","23":"771.91887","24":"10.655203","25":"1.333333","26":"330.5556","27":"0.000000","28":"106.49101","29":"0","30":"2.333333","31":"0","32":"28.202822","33":"95.63845","34":"0.984127","35":"2.638889","36":"88.761905","37":"41.111111","38":"22.624339","39":"0.0","40":"2.679012","41":"2.452381","42":"0","43":"0","44":"5.666667","45":"2.037037","46":"3.613757","47":"1.000000","48":"0.0000","49":"27.00000","50":"7.09127","51":"0","52":"1","53":"0","54":"2000-2004","55":"2000-2009","56":"West of Penobscot Bay","57":"West of Penobscot Bay, 2000-2004","58":"Fall, 2000-2004","_rn_":"2"},{"1":"Fall","2":"1","3":"2002","4":"36.20238","5":"0","6":"144.637770","7":"0","8":"1.226190","9":"1.000000","10":"0","11":"3.928571","12":"0","13":"0","14":"1","15":"1.000000","16":"0","17":"37.45024","18":"23.172619","19":"8.593203","20":"7.025641","21":"4.000000","22":"56.79426","23":"519.82326","24":"9.591270","25":"0.000000","26":"124.4817","27":"26.000000","28":"54.45177","29":"0","30":"9.826618","31":"0","32":"21.109076","33":"54.78999","34":"44.000000","35":"0.000000","36":"1.801587","37":"4.269231","38":"6.438645","39":"0.0","40":"0.952381","41":"1.000000","42":"0","43":"0","44":"4.615385","45":"0.000000","46":"0.000000","47":"0.000000","48":"1.0000","49":"55.17918","50":"6.00000","51":"0","52":"0","53":"0","54":"2000-2004","55":"2000-2009","56":"West of Penobscot Bay","57":"West of Penobscot Bay, 2000-2004","58":"Fall, 2000-2004","_rn_":"3"},{"1":"Fall","2":"1","3":"2003","4":"58.71875","5":"0","6":"90.343750","7":"0","8":"4.166667","9":"0.000000","10":"0","11":"3.250000","12":"1","13":"0","14":"0","15":"17.000000","16":"0","17":"36.87500","18":"22.305556","19":"80.666667","20":"9.750000","21":"22.447917","22":"65.97222","23":"854.44792","24":"5.645833","25":"0.000000","26":"334.1771","27":"21.291667","28":"108.80208","29":"1","30":"98.125000","31":"0","32":"8.694444","33":"201.16667","34":"1.666667","35":"2.000000","36":"277.833333","37":"4.500000","38":"16.041667","39":"22.0","40":"1.125000","41":"2.166667","42":"0","43":"0","44":"6.250000","45":"2.000000","46":"2.500000","47":"0.000000","48":"1.1250","49":"10.83333","50":"12.66667","51":"0","52":"0","53":"0","54":"2000-2004","55":"2000-2009","56":"West of Penobscot Bay","57":"West of Penobscot Bay, 2000-2004","58":"Fall, 2000-2004","_rn_":"4"},{"1":"Fall","2":"1","3":"2004","4":"138.36769","5":"0","6":"111.303363","7":"0","8":"2.944444","9":"0.000000","10":"0","11":"2.239766","12":"0","13":"0","14":"0","15":"22.666667","16":"0","17":"176.31944","18":"17.644737","19":"57.141813","20":"24.239766","21":"3.500000","22":"29.92507","23":"925.89766","24":"15.104532","25":"0.000000","26":"1159.8746","27":"4.458333","28":"21.13596","29":"2","30":"28.500000","31":"1","32":"6.123538","33":"176.44737","34":"3.000000","35":"5.583333","36":"133.444444","37":"2.000000","38":"28.040936","39":"1197.0","40":"3.517544","41":"4.750000","42":"0","43":"0","44":"3.500000","45":"0.000000","46":"1.659844","47":"11.000000","48":"110.5000","49":"137.93567","50":"11.36111","51":"0","52":"0","53":"0","54":"2000-2004","55":"2000-2009","56":"West of Penobscot Bay","57":"West of Penobscot Bay, 2000-2004","58":"Fall, 2000-2004","_rn_":"5"},{"1":"Fall","2":"1","3":"2005","4":"56.34649","5":"0","6":"148.812865","7":"0","8":"22.480263","9":"3.157895","10":"0","11":"2.795322","12":"0","13":"0","14":"0","15":"2.500000","16":"0","17":"109.51316","18":"5.166667","19":"63.058480","20":"9.631579","21":"20.175439","22":"42.16667","23":"70.20833","24":"10.055556","25":"1.666667","26":"257.7522","27":"13.333333","28":"136.96199","29":"0","30":"221.073099","31":"10","32":"3.222222","33":"280.55556","34":"1.000000","35":"1.000000","36":"752.333333","37":"6.289474","38":"16.598684","39":"0.0","40":"1.470760","41":"11.666667","42":"0","43":"0","44":"1.026316","45":"2.000000","46":"1.000000","47":"0.000000","48":"126.3333","49":"10.76316","50":"11.77778","51":"0","52":"0","53":"0","54":"2005-2009","55":"2000-2009","56":"West of Penobscot Bay","57":"West of Penobscot Bay, 2005-2009","58":"Fall, 2005-2009","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>set.seed(123)</code></pre>
+<div id="set-up-data-for-nmds" class="section level3">
+<h3>Set up data for NMDS</h3>
+<ul>
+<li>split community matrix into two dataframes- one for grouping variables and one for species biomass</li>
+<li>calculate dissimilarity matrix with Bray-Curtis distances</li>
+</ul>
+<pre class="r"><code>#set up final grouping data into dataframe
+ME_group_data&lt;-trawl_data_arrange[, c(1,2,3,55,56,57,58)]
+ME_NMDS_data&lt;-as.matrix(trawl_data_arrange[,4:53])
+
+#calculate the distance matrix
+ME_NMDS_distance&lt;- vegdist(ME_NMDS_data, method=&quot;bray&quot;)</code></pre>
+</div>
+<div id="run-the-nmds-and-extract-scores" class="section level3">
+<h3>Run the NMDS and extract scores</h3>
+<ul>
+<li>change in community composition</li>
+<li>uses rank order</li>
+<li>stress &lt; 0.2 is good, &lt; 0.1 is great, &lt;0.05 is excellent representation in reduced dimensions</li>
+</ul>
+<pre class="r"><code>ME_NMDS=metaMDS(ME_NMDS_distance, # Our community-by-species matrix
+                k=2, # The number of reduced dimensions
+                method=&quot;bray&quot;,
+                trymax=200) #increase iterations</code></pre>
+<pre><code>## Run 0 stress 0.1621597 
+## Run 1 stress 0.165904 
+## Run 2 stress 0.1662412 
+## Run 3 stress 0.1659047 
+## Run 4 stress 0.1697835 
+## Run 5 stress 0.1621597 
+## ... Procrustes: rmse 7.302489e-05  max resid 0.0009046809 
+## ... Similar to previous best
+## Run 6 stress 0.1826034 
+## Run 7 stress 0.1786665 
+## Run 8 stress 0.1659039 
+## Run 9 stress 0.1786538 
+## Run 10 stress 0.1754058 
+## Run 11 stress 0.1699903 
+## Run 12 stress 0.1818724 
+## Run 13 stress 0.1624895 
+## ... Procrustes: rmse 0.01000835  max resid 0.1363788 
+## Run 14 stress 0.1666044 
+## Run 15 stress 0.1750511 
+## Run 16 stress 0.1659053 
+## Run 17 stress 0.1660865 
+## Run 18 stress 0.1697833 
+## Run 19 stress 0.1666054 
+## Run 20 stress 0.1621604 
+## ... Procrustes: rmse 0.0002836816  max resid 0.003670803 
+## ... Similar to previous best
+## *** Solution reached</code></pre>
+<pre class="r"><code>#extract NMDS scores for ggplot
+data.scores = as.data.frame(scores(ME_NMDS))
+#add columns to data frame 
+data.scores$Stratum = trawl_data_arrange$Stratum
+data.scores$Region = trawl_data_arrange$Region
+data.scores$Year = trawl_data_arrange$Year
+data.scores$Season= trawl_data_arrange$Season
+data.scores$Year_groups= trawl_data_arrange$YEAR_GROUPS
+data.scores$Year_decades= trawl_data_arrange$YEAR_DECADES
+data.scores$Region_new=trawl_data_arrange$REGION_NEW
+data.scores$Region_year=trawl_data_arrange$REGION_YEAR
+data.scores$Season_year=trawl_data_arrange$SEASON_YEAR</code></pre>
+</div>
+<div id="plots" class="section level3">
+<h3>Plots</h3>
+<div id="region" class="section level4">
+<h4>Region</h4>
+<pre class="r"><code># both seasons
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)
+
+#calculate center of ellipse for each region/year grouping
+data.scores_2&lt;-group_by(data.scores_region, Region_new, Year_groups)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Region_new, Year_groups, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2, shape=factor(Year_groups),color=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Region_new)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Region_new),level = 0.95,size=1)+
+  scale_color_colorblind(guide=FALSE)+
+  labs(x = &quot;NMDS1&quot;, y = &quot;NMDS2&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2,shape=Year_groups, color=Region_new), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, color=Region_new), size=2)
+
+#spring
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Spring&quot;)
+
+#calculate center of ellipse for each region/year grouping
+data.scores_2&lt;-group_by(data.scores_region, Region_new, Year_groups, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Region_new, Year_groups,Season, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p1 &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2, shape=factor(Year_groups),color=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Region_new)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Region_new),level = 0.95,size=1)+
+  scale_color_colorblind(guide=FALSE)+
+  labs(x = &quot;NMDS1&quot;, y = &quot;NMDS2&quot;, title=&quot;Spring&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2,shape=Year_groups, color=Region_new), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, color=Region_new), size=2)
+
+#Fall
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Fall&quot;)
+
+#calculate center of ellipse for each region/year grouping
+data.scores_2&lt;-group_by(data.scores_region, Region_new, Year_groups, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Region_new, Year_groups,Season, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p2 &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2, shape=factor(Year_groups),color=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Region_new)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Region_new),level = 0.95,size=1)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Region&quot;, y = &quot;NMDS2&quot;, shape = &quot;Year&quot;,title=&quot;Fall&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2,shape=Year_groups, color=Region_new), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, color=Region_new), size=2)
+
+
+#Spring
+data.scores_east&lt;-filter(data.scores, Region_new==&quot;East of Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Spring&quot;)
+data.scores_west&lt;-filter(data.scores, Region_new==&quot;West of Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Spring&quot;)
+
+p3&lt;- ggplot() + 
+  geom_point(data=data.scores_east, aes(x = NMDS1, y = NMDS2,color=factor(Region_year), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_east,aes(x=NMDS1,y=NMDS2,color=factor(Region_year)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_east, aes(x=NMDS1, y=NMDS2, color=Region_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;grey&quot;, &quot;black&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_east, aes(x=NMDS1,y=NMDS2,group=factor(Region_new)))+
+  #geom_text_repel(data=data.scores_east,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;, color=&quot;black&quot;)+
+  ggnewscale::new_scale_color()+
+  geom_point(data=data.scores_west, aes(x = NMDS1, y = NMDS2,color=factor(Region_year), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_west,aes(x=NMDS1,y=NMDS2,color=factor(Region_year)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_west, aes(x=NMDS1, y=NMDS2, color=Region_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;light blue&quot;, &quot;navy&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_west, aes(x=NMDS1,y=NMDS2,group=factor(Region_new)))+
+  #geom_text_repel(data=data.scores_west,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;, color=&quot;black&quot;)+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Region/Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Region&quot;, fill=&quot;Region/Year&quot;, title=&quot;Spring&quot;)
+
+
+#Fall
+data.scores_east&lt;-filter(data.scores, Region_new==&quot;East of Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Fall&quot;)
+data.scores_west&lt;-filter(data.scores, Region_new==&quot;West of Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Fall&quot;)
+
+p4&lt;- ggplot() + 
+  geom_point(data=data.scores_east, aes(x = NMDS1, y = NMDS2,color=factor(Region_year), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_east,aes(x=NMDS1,y=NMDS2,color=factor(Region_year)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_east, aes(x=NMDS1, y=NMDS2, color=Region_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;grey&quot;, &quot;black&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_east, aes(x=NMDS1,y=NMDS2,group=factor(Region_new)))+
+  #geom_text_repel(data=data.scores_east,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;,   color=&quot;black&quot;)+
+  ggnewscale::new_scale_color()+
+  geom_point(data=data.scores_west, aes(x = NMDS1, y = NMDS2,color=factor(Region_year),      shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_west,aes(x=NMDS1,y=NMDS2,color=factor(Region_year)), size=1,   alpha=0.15)+
+  stat_ellipse(data=data.scores_west, aes(x=NMDS1, y=NMDS2, color=Region_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;light blue&quot;, &quot;navy&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_west, aes(x=NMDS1,y=NMDS2,group=factor(Region_new)))+
+  #geom_text_repel(data=data.scores_west,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;,   color=&quot;black&quot;)+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Region/Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Year&quot;, fill=&quot;Region/Year&quot;, title=&quot;Fall&quot;)
+
+p</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-5-1.png" width="1152" /></p>
+<pre class="r"><code>p1</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-5-2.png" width="1152" /></p>
+<pre class="r"><code>p2</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-5-3.png" width="1152" /></p>
+<pre class="r"><code>p3</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-5-4.png" width="1152" /></p>
+<pre class="r"><code>p4</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-5-5.png" width="1152" /></p>
+</div>
+<div id="time" class="section level4">
+<h4>Time</h4>
+<pre class="r"><code>#both seasons
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)
+
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_region, Year_groups)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:4)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2,color=factor(Year_groups), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Year_groups)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Year_groups),level = 0.95,size=1)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Region&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2, color=Year_groups), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2), size=2)
+
+#spring
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Spring&quot;)
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_region, Year_groups, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:4)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p1 &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2,color=factor(Year_groups), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Year_groups)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Year_groups),level = 0.95,size=1)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Region&quot;, title=&quot;Spring&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2, color=Year_groups), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2), size=2)
+
+
+#Fall
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Fall&quot;)
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_region, Year_groups, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:4)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+p2 &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2,color=factor(Year_groups), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Year_groups)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Year_groups),level = 0.95,size=1)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Region&quot;, title=&quot;Fall&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2, color=Year_groups), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2), size=2)
+
+
+
+
+#Spring
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Spring&quot;)
+
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_region, Year_groups,Region_new, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season,Region_new, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+p3 &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2,color=factor(Year_groups), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Year_groups)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Year_groups),level = 0.95,size=1)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Region&quot;, title=&quot;Spring&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2, color=Year_groups, shape=Region_new), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, group=Region_new), size=2)
+
+
+#Fall
+data.scores_region&lt;-filter(data.scores,Region_new!=&quot;Penobscot Bay&quot;)%&gt;%
+  filter(Season==&quot;Fall&quot;)
+
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_region, Year_groups,Region_new, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season,Region_new, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+p4 &lt;- ggplot() + 
+  geom_point(data=data.scores_region, aes(x = NMDS1, y = NMDS2,color=factor(Year_groups), shape=factor(Region_new)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_region,aes(x=NMDS1,y=NMDS2,color=factor(Year_groups)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_region, aes(x=NMDS1, y=NMDS2, color=Year_groups),level = 0.95,size=1)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Region&quot;, title=&quot;Fall&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2, color=Year_groups, shape=Region_new), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, group=Region_new), size=2)
+
+
+p</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-6-1.png" width="1152" /></p>
+<pre class="r"><code>p1</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-6-2.png" width="1152" /></p>
+<pre class="r"><code>p2</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-6-3.png" width="1152" /></p>
+<pre class="r"><code>p3</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-6-4.png" width="1152" /></p>
+<pre class="r"><code>p4</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-6-5.png" width="1152" /></p>
+</div>
+<div id="season" class="section level4">
+<h4>Season</h4>
+<pre class="r"><code>#all regions
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores, Year_groups, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+  dplyr:: select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p &lt;- ggplot(data.scores, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 3, aes(shape=factor(Year_groups), color=factor(Season)))+ 
+  stat_ellipse(data=data.scores, aes(x=NMDS1, y=NMDS2, color=Season),level = 0.95,size=1)+
+  #geom_mark_ellipse(aes(color=factor(Season)), size=1, alpha=0.15)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Season&quot;, y = &quot;NMDS2&quot;, shape = &quot;Year&quot;, fill=&quot;Season&quot;)+
+    geom_point(data=centers, aes(NMDS1, NMDS2, color=Season, shape=Year_groups), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, color=Season), size=2)
+
+
+#ellipse season and year plot
+
+data.scores_west&lt;-filter(data.scores, Region_new==&quot;West of Penobscot Bay&quot;)
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_west, Year_groups,Region_new, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season,Region_new, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+  dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+#West
+p1 &lt;- ggplot(data.scores_west, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 3, aes(shape=factor(Year_groups), color=factor(Season)))+ 
+  stat_ellipse(data=data.scores_west, aes(x=NMDS1, y=NMDS2, color=Season),level = 0.95,size=1)+
+  #geom_mark_ellipse(aes(color=factor(Season)), size=1, alpha=0.15)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Season&quot;, y = &quot;NMDS2&quot;, shape = &quot;Year&quot;, fill=&quot;Season&quot;, title=&quot;West&quot;)+
+    geom_point(data=centers, aes(NMDS1, NMDS2, color=Season, shape=Year_groups), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, color=Season), size=2)
+
+#East
+data.scores_east&lt;-filter(data.scores, Region_new==&quot;East of Penobscot Bay&quot;)
+#centers for year plots
+data.scores_2&lt;-group_by(data.scores_east, Year_groups,Region_new, Season)%&gt;%
+   mutate(indicator=cur_group_id())
+id&lt;-dplyr::select(data.scores_2, Year_groups,Season,Region_new, indicator)
+id&lt;-unique(id)
+
+ctr&lt;-NULL
+Ncombo&lt;-length(unique(data.scores_2$indicator))
+
+for (i in 1:Ncombo) {
+ combos&lt;- filter(data.scores_2, indicator==i)%&gt;%
+   ungroup()%&gt;%
+   dplyr::select(1:2)
+ 
+  ctr[[i]]&lt;-MASS::cov.trob(combos)$center
+  
+}
+
+d&lt;-as.data.frame(ctr)
+d&lt;-as.data.frame(t(d))
+d$indicator&lt;-seq(1:8)
+rownames(d)&lt;-NULL
+centers&lt;-full_join(d,id)
+
+
+p2 &lt;- ggplot(data.scores_east, aes(x = NMDS1, y = NMDS2)) + 
+  geom_point(size = 3, aes(shape=factor(Year_groups), color=factor(Season)))+ 
+  stat_ellipse(data=data.scores_east, aes(x=NMDS1, y=NMDS2, color=Season),level = 0.95,size=1)+
+  #geom_mark_ellipse(aes(color=factor(Season)), size=1, alpha=0.15)+
+  scale_color_colorblind()+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Season&quot;, y = &quot;NMDS2&quot;, shape = &quot;Year&quot;, fill=&quot;Season&quot;, title=&quot;East&quot;)+
+  geom_point(data=centers, aes(NMDS1, NMDS2, color=Season, shape=Year_groups), size=10)+
+  geom_path(data=centers, aes(NMDS1, NMDS2, group=Season), size=2)
+
+#West
+data.scores_spring&lt;-filter(data.scores, Season==&quot;Spring&quot;)%&gt;%
+  filter(Region_new==&quot;West of Penobscot Bay&quot;)
+data.scores_fall&lt;-filter(data.scores, Season==&quot;Fall&quot;)%&gt;%
+  filter(Region_new==&quot;West of Penobscot Bay&quot;)
+
+p3 &lt;- ggplot() + 
+  geom_point(data=data.scores_fall, aes(x = NMDS1, y = NMDS2,color=factor(Season_year), shape=factor(Season)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_fall,aes(x=NMDS1,y=NMDS2,color=factor(Season_year)), size=1, alpha=0.15)+
+stat_ellipse(data=data.scores_fall, aes(x=NMDS1, y=NMDS2, color=Season_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;grey&quot;, &quot;black&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_fall, aes(x=NMDS1,y=NMDS2,group=factor(Season)))+
+  #geom_text_repel(data=data.scores_fall,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;, color=&quot;black&quot;)+
+  ggnewscale::new_scale_color()+
+  geom_point(data=data.scores_spring, aes(x = NMDS1, y = NMDS2,color=factor(Season_year), shape=factor(Season)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_spring,aes(x=NMDS1,y=NMDS2,color=factor(Season_year)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_spring, aes(x=NMDS1, y=NMDS2, color=Season_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;light blue&quot;, &quot;navy&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_spring, aes(x=NMDS1,y=NMDS2,group=factor(Season)),color=&quot;navy&quot;)+
+  #geom_text_repel(data=data.scores_spring,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;, color=&quot;black&quot;)+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Season/Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Season&quot;, fill=&quot;Season/Year&quot;, title=&quot;West&quot;)
+
+
+#East
+data.scores_spring&lt;-filter(data.scores, Season==&quot;Spring&quot;)%&gt;%
+  filter(Region_new==&quot;East of Penobscot Bay&quot;)
+data.scores_fall&lt;-filter(data.scores, Season==&quot;Fall&quot;)%&gt;%
+  filter(Region_new==&quot;East of Penobscot Bay&quot;)
+
+p4 &lt;- ggplot() + 
+  geom_point(data=data.scores_fall, aes(x = NMDS1, y = NMDS2,color=factor(Season_year), shape=factor(Season)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_fall,aes(x=NMDS1,y=NMDS2,color=factor(Season_year)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_fall, aes(x=NMDS1, y=NMDS2, color=Season_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;grey&quot;, &quot;black&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_fall, aes(x=NMDS1,y=NMDS2,group=factor(Season)))+
+  #geom_text_repel(data=data.scores_fall,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;, color=&quot;black&quot;)+
+  ggnewscale::new_scale_color()+
+  geom_point(data=data.scores_spring, aes(x = NMDS1, y = NMDS2,color=factor(Season_year), shape=factor(Season)),size = 3)+ 
+  #geom_mark_ellipse(data=data.scores_spring,aes(x=NMDS1,y=NMDS2,color=factor(Season_year)), size=1, alpha=0.15)+
+  stat_ellipse(data=data.scores_spring, aes(x=NMDS1, y=NMDS2, color=Season_year),level = 0.95,size=1)+
+  scale_color_manual(values=scales::seq_gradient_pal(&quot;light blue&quot;, &quot;navy&quot;, &quot;Lab&quot;)(seq(0,1,length.out=4)))+
+  #geom_path(data=data.scores_spring, aes(x=NMDS1,y=NMDS2,group=factor(Season)),color=&quot;navy&quot;)+
+  #geom_text_repel(data=data.scores_spring,aes(x=NMDS1,y=NMDS2,label=Year), size=4, fontface=&quot;bold&quot;, color=&quot;black&quot;)+
+  labs(x = &quot;NMDS1&quot;, colour = &quot;Season/Year&quot;, y = &quot;NMDS2&quot;, shape = &quot;Year&quot;, fill=&quot;Season/Year&quot;, title=&quot;East&quot;)
+
+p</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-7-1.png" width="1152" /></p>
+<pre class="r"><code>p1</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-7-2.png" width="1152" /></p>
+<pre class="r"><code>p2</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-7-3.png" width="1152" /></p>
+<pre class="r"><code>p3</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-7-4.png" width="1152" /></p>
+<pre class="r"><code>p4</code></pre>
+<p><img src="NMDS_species_abundance_7.21_files/figure-html/unnamed-chunk-7-5.png" width="1152" /></p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
